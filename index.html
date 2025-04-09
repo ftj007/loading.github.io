@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频展示</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg-dark: #0a0a1a;
+            --neon-blue: #00f0ff;
+            --electric-purple: #b300ff;
+            --hud-green: #00ff41;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-dark);
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--neon-blue);
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            animation: scanline 3s linear infinite;
+        }
+
+        .search-box {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: 1px solid var(--neon-blue);
+            width: 300px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-family: 'Space Mono', monospace;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--neon-blue);
+            border-color: var(--electric-purple);
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: 1px solid var(--neon-blue);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--neon-blue);
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .category-btn:hover::before {
+            left: 100%;
+        }
+
+        .category-btn.active {
+            background-color: var(--electric-purple);
+            color: white;
+            box-shadow: 0 0 10px var(--electric-purple);
+            border-color: var(--electric-purple);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            position: relative;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--electric-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+            border-color: var(--neon-blue);
+        }
+
+        .video-card:hover::before {
+            opacity: 1;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(0, 15, 30, 0.8), rgba(0, 30, 60, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neon-blue);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes flicker {
+
+            0%,
+            19%,
+            21%,
+            23%,
+            25%,
+            54%,
+            56%,
+            100% {
+                opacity: 1;
+            }
+
+            20%,
+            22%,
+            24%,
+            55% {
+                opacity: 0.7;
+            }
+        }
+
+        .modal-content {
+            width: 50%;
+            max-width: 800px;
+            background-color: var(--bg-dark);
+            padding: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            position: relative;
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--electric-purple));
+            animation: scanline 3s linear infinite;
+        }
+
+        #modalVideo {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--neon-blue);
+            font-size: 30px;
+            cursor: pointer;
+            text-shadow: 0 0 5px var(--neon-blue);
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--electric-purple);
+            text-shadow: 0 0 10px var(--electric-purple);
+        }
+
+        .download-btn {
+            display: block;
+            margin: 15px auto 0;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+                width: 90%;
+            }
+
+            .search-box {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>视频展示</h1>
+        <input type="text" class="search-box" placeholder="搜索视频...">
+    </div>
+
+    <div class="category-filter">
+        <button class="category-btn active">全部</button>
+        <button class="category-btn">生活</button>
+        <button class="category-btn">学习</button>
+        <button class="category-btn">品德</button>
+    </div>
+
+    <div class="video-grid" id="videoContainer">
+        <!-- 视频卡片将通过JavaScript动态生成 -->
+    </div>
+
+    <div class="modal" id="videoModal">
+        <span class="close-btn">&times;</span>
+        <div class="modal-content">
+            <video controls width="100%" id="modalVideo">
+                <source src="" type="video/mp4">
+                您的浏览器不支持HTML5视频
+            </video>
+            <button id="downloadBtn" class="download-btn">下载视频</button>
+        </div>
+    </div>
+
+    <script>
+        // 从video.json加载数据
+        const data = {
+            "videos": [
+                {
+                    "title": "积木",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0328-0-27695d47-a9d4-4ffc-b7a1-233a667ac3df.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0328-0-27695d47-a9d4-4ffc-b7a1-233a667ac3df.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "吃饭",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0328-0-3afefb19-9775-44d3-9a30-e182ba822be0.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0328-0-3afefb19-9775-44d3-9a30-e182ba822be0.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "星期一",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0331-0-9b0312db-b8dd-454c-b395-36cca387ae7b.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0331-0-9b0312db-b8dd-454c-b395-36cca387ae7b.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "刷牙",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0401-0-4620e78d-0ea4-439e-abcd-ca3d72beab4f.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0401-0-4620e78d-0ea4-439e-abcd-ca3d72beab4f.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "洗脸",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0402-0-1c20db53-5fe7-4627-b8e5-75b45ec2b264.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0402-0-1c20db53-5fe7-4627-b8e5-75b45ec2b264.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "兔子 ",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0404-0-cbfd02fe-a87d-4bdc-951c-273553766dda.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0404-0-cbfd02fe-a87d-4bdc-951c-273553766dda.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "请求帮助 ",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0405-0-cb72f075-e371-4fbe-804b-9371ffd9ed3e.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0405-0-cb72f075-e371-4fbe-804b-9371ffd9ed3e.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "相信自己 ",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0405-0-b49ca434-9e00-40fa-b9cd-016c6d6505c9.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0405-0-b49ca434-9e00-40fa-b9cd-016c6d6505c9.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "友谊的力量",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0408-0-178166ac-c6aa-47e9-b60b-f978410841fa.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0408-0-178166ac-c6aa-47e9-b60b-f978410841fa.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "诚实守信 ",
+                    "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0408-0-9475a6ed-d67c-45c1-8788-a0affad6ca6b.mp4",
+                    "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0408-0-9475a6ed-d67c-45c1-8788-a0affad6ca6b.mp4",
+                    "image_url": ""
+                },
+                {
+                    "title": "我的书",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "强大的自我",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "生命的价值",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "爱护环境",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "团队合作",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "感恩的心",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "勇敢尝试",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "时间管理",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "健康饮食",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "尊重他人",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "快乐学习",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "安全第一",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "我的宠物",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "在学校的一天",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "我最喜欢的季节",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "在家帮忙",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "我最好的朋友",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "一个雨天",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "我们的教室",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "我的家人",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "我家附近的公园",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "我的爱好",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                },
+                {
+                    "title": "一个有趣的故事",
+                    "download_url": "",
+                    "output_url": "",
+                    "image_url": ""
+                }
+            ]
+        }
+
+        fetch('video.json')
+            .then(response => response.json())
+            .then(data => {
+                const videos = data.videos.reverse();
+                const videoContainer = document.getElementById('videoContainer');
+                let currentPage = 1;
+                const itemsPerPage = 9; // 3行每行3个
+                let isLoading = false;
+                let allLoaded = false;
+
+                // 创建底部提示元素
+                const loadMoreIndicator = document.createElement('div');
+                loadMoreIndicator.id = 'loadMoreIndicator';
+                loadMoreIndicator.style.textAlign = 'center';
+                loadMoreIndicator.style.padding = '20px';
+                loadMoreIndicator.style.color = 'var(--neon-blue)';
+                videoContainer.appendChild(loadMoreIndicator);
+
+                // 初始加载
+                loadVideos();
+
+                // 滚动事件监听
+                window.addEventListener('scroll', () => {
+                    if (isLoading || allLoaded) return;
+
+                    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+                    if (scrollTop + clientHeight >= scrollHeight - 100) {
+                        loadVideos();
+                    }
+                });
+
+                function loadVideos() {
+                    isLoading = true;
+                    loadMoreIndicator.textContent = '加载中...';
+
+                    // 模拟异步加载
+                    setTimeout(() => {
+                        const startIndex = (currentPage - 1) * itemsPerPage;
+                        const endIndex = startIndex + itemsPerPage;
+                        const videosToShow = videos.slice(startIndex, endIndex);
+
+                        if (videosToShow.length === 0) {
+                            loadMoreIndicator.textContent = '已经到底了';
+                            allLoaded = true;
+                            isLoading = false;
+                            return;
+                        }
+
+                        // 渲染视频卡片
+                        videosToShow.forEach(video => {
+                            const videoCard = document.createElement('div');
+                            videoCard.className = 'video-card';
+                            videoCard.innerHTML = `
+                                <div class="video-thumbnail" style="background-image: url('${video.image_url}'); background-size: cover; background-position: center;">
+                                    <i class="fas fa-play" style="font-size: 40px; color: #4CAF50;"></i>
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">${video.title}</h3>
+                                </div>
+                            `;
+
+                            // 添加图片加载错误处理
+                            const thumbnail = videoCard.querySelector('.video-thumbnail');
+                            thumbnail.addEventListener('error', () => {
+                                thumbnail.style.backgroundImage = `url('image.png')`;
+                            });
+                            // 预加载本地图片以防网络图片加载失败
+                            thumbnail.style.backgroundImage = `url('${video.image_url}'), url('image.png')`;
+
+                            videoCard.addEventListener('click', () => {
+                                const modal = document.getElementById('videoModal');
+                                const videoPlayer = document.getElementById('modalVideo');
+                                videoPlayer.src = video.output_url;
+                                modal.style.display = 'flex';
+
+                                // 设置下载按钮点击事件
+                                const downloadBtn = document.getElementById('downloadBtn');
+                                downloadBtn.onclick = () => {
+                                    const a = document.createElement('a');
+                                    a.href = video.download_url;
+                                    a.download = video.title + '.mp4';
+                                    document.body.appendChild(a);
+                                    a.click();
+                                    document.body.removeChild(a);
+                                };
+                            });
+
+                            videoContainer.insertBefore(videoCard, loadMoreIndicator);
+                        });
+
+                        currentPage++;
+                        isLoading = false;
+                        loadMoreIndicator.textContent = '';
+                    }, 500);
+                }
+
+                // 搜索功能
+                const searchBox = document.querySelector('.search-box');
+                searchBox.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.toLowerCase();
+                    const cards = document.querySelectorAll('.video-card');
+
+                    cards.forEach(card => {
+                        const title = card.querySelector('.video-title').textContent.toLowerCase();
+                        if (title.includes(searchTerm)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+
+                // 分类筛选
+                const categoryBtns = document.querySelectorAll('.category-btn');
+                categoryBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        categoryBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        // 这里可以添加分类筛选逻辑
+                    });
+                });
+
+                // 关闭弹窗
+                const modal = document.getElementById('videoModal');
+                const closeBtn = document.querySelector('.close-btn');
+                closeBtn.addEventListener('click', () => {
+                    const videoPlayer = document.getElementById('modalVideo');
+                    videoPlayer.pause();
+                    modal.style.display = 'none';
+                });
+
+                // 点击模态框外部关闭
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        const videoPlayer = document.getElementById('modalVideo');
+                        videoPlayer.pause();
+                        modal.style.display = 'none';
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('加载视频数据失败:', error);
+                videoContainer.innerHTML = '<p>加载视频数据失败，请刷新页面重试</p>';
+            });
+    </script>
+</body>
+
+</html>
