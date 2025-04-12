@@ -89,6 +89,12 @@
             "image_url": "https://s.coze.cn/t/9GbQjj7Hj-4/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0410-0-d7f63b82-e405-4d44-a216-7a9811ffe163.mp4",
             "title": "团队合作"
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0412-0-2e95e2ee-d83e-4b02-8c65-be01253f9c5f.mp4",
+            "image_url": "https://s.coze.cn/t/ZqjqG0a4_zs/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0412-0-2e95e2ee-d83e-4b02-8c65-be01253f9c5f.mp4",
+            "title": "感恩的心"
         }
     ]
 }
