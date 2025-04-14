@@ -101,6 +101,18 @@
             "image_url": "https://s.coze.cn/t/4SJntxz0r2g/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0413-0-720ca3f6-05ed-4873-8bad-bdd6f476e788.mp4",
             "title": "时间管理"
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0414-0-f6f702a8-4fba-43c5-a969-0bb02aa367d9.mp4",
+            "image_url": "https://s.coze.cn/t/ybiCzwrZjLI/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0414-0-f6f702a8-4fba-43c5-a969-0bb02aa367d9.mp4",
+            "title": "健康饮食"
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0414-0-8d9266ae-4b05-480e-a803-80b0edb575e0.mp4",
+            "image_url": "https://s.coze.cn/t/OtV5uUegVc8/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0414-0-8d9266ae-4b05-480e-a803-80b0edb575e0.mp4",
+            "title": "尊重他人"
         }
     ]
 }
