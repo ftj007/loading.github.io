@@ -113,6 +113,18 @@
             "image_url": "https://s.coze.cn/t/OtV5uUegVc8/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0414-0-8d9266ae-4b05-480e-a803-80b0edb575e0.mp4",
             "title": "尊重他人"
+        },
+        {
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0415-0-ca54cf92-d414-4947-a9c6-9bffd62e6307.mp4",
+            "image_url": "https://s.coze.cn/t/A-RggV8ePpM/",
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0415-0-ca54cf92-d414-4947-a9c6-9bffd62e6307.mp4",
+            "title": "快乐学习"
+        },
+        {
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0416-0-a3812202-2dc1-427b-80f2-a8b6eaae35a5.mp4",
+            "image_url": "https://s.coze.cn/t/Szo-Z21o4X8/",
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0416-0-a3812202-2dc1-427b-80f2-a8b6eaae35a5.mp4",
+            "title": "安全第一"
         }
     ]
 }
