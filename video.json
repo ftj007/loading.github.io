@@ -125,6 +125,12 @@
             "image_url": "https://s.coze.cn/t/Szo-Z21o4X8/",
             "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0416-0-a3812202-2dc1-427b-80f2-a8b6eaae35a5.mp4",
             "title": "安全第一"
-        }
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0417-0-25b62bd4-d8c4-4745-9608-2fc589fe23ec.mp4",
+            "image_url": "https://s.coze.cn/t/sBCikZdFjzM/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0417-0-25b62bd4-d8c4-4745-9608-2fc589fe23ec.mp4",
+            "title": "我的宠物"
+          }
     ]
 }
