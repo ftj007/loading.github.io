@@ -131,6 +131,12 @@
             "image_url": "https://s.coze.cn/t/sBCikZdFjzM/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0417-0-25b62bd4-d8c4-4745-9608-2fc589fe23ec.mp4",
             "title": "我的宠物"
-          }
+        },
+        {
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0418-0-cde62c16-ea0a-4950-a984-dc386467654b.mp4",
+            "image_url": "https://mathmind.feishu.cn/docx/Q6eodjvPLoq7yDxZaHOcfnFrntg?from=from_copylink",
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0418-0-cde62c16-ea0a-4950-a984-dc386467654b.mp4",
+            "title": "我最喜欢的季节"
+        }
     ]
 }
