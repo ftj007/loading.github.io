@@ -143,6 +143,12 @@
             "image_url": "https://s.coze.cn/t/BmrbfuFKxus/",
             "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0421-0-d2ce2f2f-2969-4d2a-bf8a-5072c4882715.mp4",
             "title": "在家帮忙"
-          }
+        },
+        {
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0421-0-c6cab2be-1983-4ba1-9ac4-efc512acc97f.mp4",
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0421-0-c6cab2be-1983-4ba1-9ac4-efc512acc97f.mp4",
+            "image_url": "https://s.coze.cn/t/wwVrhKjvP4A/",
+            "title": "我最好的朋友"
+        }
     ]
 }
