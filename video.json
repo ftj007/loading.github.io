@@ -137,6 +137,12 @@
             "image_url": "https://mathmind.feishu.cn/docx/Q6eodjvPLoq7yDxZaHOcfnFrntg?from=from_copylink",
             "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0418-0-cde62c16-ea0a-4950-a984-dc386467654b.mp4",
             "title": "我最喜欢的季节"
-        }
+        },
+        {
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0421-0-d2ce2f2f-2969-4d2a-bf8a-5072c4882715.mp4",
+            "image_url": "https://s.coze.cn/t/BmrbfuFKxus/",
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0421-0-d2ce2f2f-2969-4d2a-bf8a-5072c4882715.mp4",
+            "title": "在家帮忙"
+          }
     ]
 }
