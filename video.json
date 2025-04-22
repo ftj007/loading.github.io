@@ -149,6 +149,12 @@
             "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0421-0-c6cab2be-1983-4ba1-9ac4-efc512acc97f.mp4",
             "image_url": "https://s.coze.cn/t/wwVrhKjvP4A/",
             "title": "我最好的朋友"
-        }
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0422-0-3d0fa2e9-d361-4f11-9910-d0783d80c1d8.mp4",
+            "image_url": "https://s.coze.cn/t/2ZvONpw9Cx0/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0422-0-3d0fa2e9-d361-4f11-9910-d0783d80c1d8.mp4",
+            "title": "一个雨天"
+          }
     ]
 }
