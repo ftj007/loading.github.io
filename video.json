@@ -155,6 +155,12 @@
             "image_url": "https://s.coze.cn/t/2ZvONpw9Cx0/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0422-0-3d0fa2e9-d361-4f11-9910-d0783d80c1d8.mp4",
             "title": "一个雨天"
-          }
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0424-0-3af23aa0-a7be-47ea-9f6b-b316d1f08df5.mp4",
+            "image_url": "https://s.coze.cn/t/ffS_DfWu9TA/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0424-0-3af23aa0-a7be-47ea-9f6b-b316d1f08df5.mp4",
+            "title": "我们的教室"
+        }
     ]
 }
