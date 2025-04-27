@@ -161,6 +161,12 @@
             "image_url": "https://s.coze.cn/t/ffS_DfWu9TA/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0424-0-3af23aa0-a7be-47ea-9f6b-b316d1f08df5.mp4",
             "title": "我们的教室"
-        }
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0427-0-51b5d4e8-94c7-42c0-9982-11ad16d90637.mp4",
+            "image_url": "https://s.coze.cn/t/7mluiBuo34E/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0427-0-51b5d4e8-94c7-42c0-9982-11ad16d90637.mp4",
+            "title": "五一劳动节"
+          }
     ]
 }
