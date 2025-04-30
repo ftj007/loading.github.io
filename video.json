@@ -173,6 +173,12 @@
             "image_url": "https://s.coze.cn/t/B7I3tbq1SvQ/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0429-0-40e6f4a4-b7fb-4cae-9237-e56ac7af9b1f.mp4",
             "title": "学游泳"
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0430-0-e1e087a9-0433-4df0-bafb-0918b06dad30.mp4",
+            "image_url": "https://s.coze.cn/t/2PYdfVRy1Zg/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0430-0-e1e087a9-0433-4df0-bafb-0918b06dad30.mp4",
+            "title": "节约用水"
         }
     ]
 }
