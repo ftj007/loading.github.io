@@ -179,6 +179,12 @@
             "image_url": "https://s.coze.cn/t/2PYdfVRy1Zg/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0430-0-facfd6d1-9248-429e-beb7-5f8b0678f451.mp4",
             "title": "节约用水"
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0506-0-5bd58ef1-e890-4585-b452-a92eab16668a.mp4",
+            "image_url": "https://s.coze.cn/t/E2ubxVOZ1l8/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0506-0-5bd58ef1-e890-4585-b452-a92eab16668a.mp4",
+            "title": "我的爱好"
         }
     ]
 }
