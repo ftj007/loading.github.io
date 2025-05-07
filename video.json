@@ -185,6 +185,12 @@
             "image_url": "https://s.coze.cn/t/E2ubxVOZ1l8/",
             "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0506-0-5bd58ef1-e890-4585-b452-a92eab16668a.mp4",
             "title": "我的爱好"
+        },
+        {
+            "download_url": "https://agent.mathmind.cn/minimalist/api/video/download/0507-0-657e232d-0768-492f-bd15-b2eda0703b94.mp4",
+            "image_url": "https://s.coze.cn/t/O0VsBAQ4qdI/",
+            "output_url": "https://agent.mathmind.cn/minimalist/api/video/files/0507-0-657e232d-0768-492f-bd15-b2eda0703b94.mp4",
+            "title": "我的小手工"
         }
     ]
 }
